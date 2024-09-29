@@ -9,25 +9,21 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
     const data = {
-        labels: ["Bnak 1", "Bank 2", "Bank 3"],
+        labels: ["Bank 1", "Bank 2", "Bank 3"],
         datasets: [
             {
                 label: "Banks",
                 data: [1000, 1500, 1200],
-                backgroundColor: ['#0747b6', '#2265d8', '#2f91fa'],
+                backgroundColor: ['#FFA500', '#2265d8', '#008000'],
             }
         ]
     };
     const options = {
-        cutout: 6,
+        cutout: 16,
         responsive: true,
         plugins: {
           legend: {
-            position: 'bottom', // Positions the legend at the bottom to prevent overlap
-            labels: {
-              padding: 5, // Adds padding between the legend and the chart
-              boxWidth: 20, // Adjust the size of the box indicating colors
-            },
+            display: false
           },
           tooltip: {
             enabled: true,
