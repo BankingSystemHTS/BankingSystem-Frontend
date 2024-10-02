@@ -10,15 +10,15 @@ const Home = () => {
         <header className="home-header">
           <HeaderBox 
             type="greeting"
-            title="Welcome"
+            title="Welcome, "
             user= {loggedIn?.firstName || "Guest"}
-            subtext="access and manage your account 
+            subtext="Access & Manage your account 
             and trasactions efficiently."
           />
           <TotalBalanceBox 
             accounts={[]}
             totalBanks={1}
-            totalCurrentBalance={1250.35}
+            totalCurrentBalance={12}
           />
         </header>
       </div>

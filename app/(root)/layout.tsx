@@ -1,6 +1,7 @@
 //layout for the main components
 export const dynamic = 'force-dynamic'
 
+import Sidebar from "@/components/Sidebar";
 import type { Metadata } from "next";
 
 
@@ -9,19 +10,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const loggedIn = { firstName: 'Nathan', lastName: 'Chan'};
+
   return (
-    <html lang="en">
-      <body>
-        <header>
-          Side Bar
-        </header>
-        <main>
-          {children}
-        </main>
-        <footer>
-          Footer
-        </footer>
-      </body>
-    </html>
+    <main className="flex h-screen w-full font-inter">
+      <Sidebar user={loggedIn} />
+
+      <div className="flex size-full flex-col">
+        <div className="root-layout">
+          {/* <Image src="/icons/logo.svg" width={30} height={30} alt="logo" /> */}
+          <div>
+            {/* <MobileNav user={loggedIn} /> */}
+          </div>
+        </div>
+        {children}
+      </div>
+    </main>
+      
+    
   );
 }
