@@ -60,21 +60,19 @@ const MobileNav = ({ user }: MobileNavProps) => {
                                         <SheetClose asChild key={item.route}>
                                             <Link
                                                 href={item.route}
-                                                key={item.label}
-                                                className={clsx('sidebar-link shadow', { 'bg-bank-gradient': isActive })}
+                                                key={item.label} 
+                                                className={clsx('mobilenav-sheet_close w-full  shadow ', { 'bg-bank-gradient': isActive })}
                                             >
-                                                <div className="flex gap-4">
                                                     <Image
                                                         src={item.imgURL}
                                                         alt="Nav Logo"
-                                                        width={24}
-                                                        height={24}
+                                                        width={20}
+                                                        height={20}
                                                         className={clsx({ "brightness-[3] invert-0": isActive })}
                                                     />
-                                                    <p className={clsx('sidebar-label', { '!text-white': isActive })}>
+                                                    <p className={clsx('text-16 text-slate-900 font-light', { '!text-white': isActive })}>
                                                         {item.label}
                                                     </p>
-                                                </div>
                                             </Link>
 
                                         </SheetClose>

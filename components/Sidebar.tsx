@@ -11,6 +11,7 @@ import React from 'react'
 const Sidebar = ({ user }: SiderbarProps) => {
   const pathname = usePathname();
   return (
+    //this section will be hidden if width < 768px
     <section className="sidebar">
       <nav className="flex flex-col gap-4">
         <Link
@@ -35,7 +36,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
             <Link
               href={item.route}
               key={item.label}
-              className={clsx('sidebar-link', {'bg-bank-gradient' : isActive})}
+              className={clsx('sidebar-link', { 'bg-bank-gradient': isActive })}
             >
               <div className="flex gap-4">
                 <Image
@@ -43,9 +44,9 @@ const Sidebar = ({ user }: SiderbarProps) => {
                   alt="Nav Logo"
                   width={24}
                   height={24}
-                  className={clsx({"brightness-[3] invert-0": isActive})}
+                  className={clsx({ "brightness-[3] invert-0": isActive })}
                 />
-                <p className={clsx('sidebar-label', {'!text-white' : isActive})}>
+                <p className={clsx('sidebar-label', { '!text-white': isActive })}>
                   {item.label}
                 </p>
               </div>
@@ -54,10 +55,23 @@ const Sidebar = ({ user }: SiderbarProps) => {
         }
         )
         }
-        USER
+        {/* <p className="text-slate-900">User</p> */}
       </nav>
-      FOOTER
-    </section>
+
+
+      <Link
+        href="/"
+        className="flex p-4 gap-4"
+      >
+        <Image
+          src="/icons2/user-logout.svg"
+          width={24}
+          height={24}
+          alt="logout-icon"
+        />
+        <p className="text-slate-900 text-semibold">Logout</p>
+      </Link>
+    </section >
   )
 }
 
