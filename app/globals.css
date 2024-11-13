@@ -162,23 +162,27 @@
 
   /* Right sidebar */
   .right-sidebar {
-    @apply no-scrollbar hidden h-screen max-h-screen flex-col border-l border-gray-200 xl:flex w-[355px] xl:overflow-y-scroll !important;
+    @apply no-scrollbar hidden h-screen max-h-screen flex-col 
+    border-l border-gray-200 xl:flex w-[355px] xl:overflow-y-scroll 
+    !important;
   }
 
   .profile-banner {
     @apply h-[120px] w-full bg-gradient-mesh bg-cover bg-no-repeat;
   }
+ 
 
   .profile {
     @apply relative flex px-6 max-xl:justify-center;
   }
 
   .profile-img {
-    @apply flex-center absolute -top-8 size-24 rounded-full bg-gray-100 border-8 border-white p-2 shadow-profile;
+    @apply flex-center absolute top-24 right-60 size-24 rounded-full
+     bg-gray-100 border-8 border-white p-2 shadow-profile;
   }
 
   .profile-details {
-    @apply flex flex-col pt-24;
+    @apply flex flex-col pt-24 pl-4;
   }
 
   .profile-name {
