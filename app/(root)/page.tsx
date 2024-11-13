@@ -21,6 +21,7 @@ const Home = () => {
             totalCurrentBalance={12}
           />
         </header>
+        Recent Transations
       </div>
     </section>
   )
