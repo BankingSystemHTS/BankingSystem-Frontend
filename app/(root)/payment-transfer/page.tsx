@@ -1,6 +1,6 @@
 import React from 'react'
 
-const page = () => {
+const Transfer = () => {
   return (
     <div>
       Payment transfer page
@@ -8,4 +8,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Transfer
