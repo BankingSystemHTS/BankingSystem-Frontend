@@ -36,7 +36,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
           <Link
             href="/"
             className="mb-12 flex pl-4 pt-2
-                            cursor-pointer items-center gap-2"
+            cursor-pointer items-center gap-2"
           >
             <Image
               src="/icons/logo.svg"
@@ -44,7 +44,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
               height={34}
               alt="horizon logo"
               className="size-[24px]
-                                        max-xl:size-14"
+                         max-xl:size-14"
             />
             <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">
               Horizon
