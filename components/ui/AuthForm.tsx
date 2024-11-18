@@ -17,35 +17,40 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from './button'
+import CustomInput from '../CustomInput'
+
 
 //using zod to define the shape of form
-const formSchema = z.object({
+export const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }).max(50),
 
-  // password: z.string().min(2).max(20),
+  password: z.string().min(2).max(20),
   email: z.string().email()
 })
+
+export type FormSchemaType = z.infer<typeof formSchema>
 
 const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null)
   // useForm from react-hook-form to create a form obj
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      // password: "",
-      // email: "xx@gmail.com"
+      password: "",
+      email: ""
     },
   })
+
   // values contains all type-safe and validated fields
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
   }
   return (
     <section className="auth-form">
-      <header className="flex flex-col gap-5 md:gap-8">
+      <header className="flex flex-col ">
         <Link
           href="/"
           className="mb-12 flex pl-4 pt-2
@@ -64,7 +69,7 @@ const AuthForm = ({ type }: { type: string }) => {
             Horizon
           </h1>
         </Link>
-        <div className='flex flex-col gap-1 md:gap-3'>
+        <div className='flex flex-col gap-1 '>
           <h1 className="text-24 lg-text-36 font-semibold text-gray-900">
             {user ? 'Link Account' : type == 'sign-in' ?
               'Sign In' : 'Sign Up'
@@ -87,38 +92,27 @@ const AuthForm = ({ type }: { type: string }) => {
           {/* spread all prop and methods from form to Form as props
         props like register, control, handleSubmit */}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="username" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => {
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-                  return (<FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="email" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      This is your email
-                    </FormDescription>
-                  </FormItem>
-                  )
-                }}
+              <CustomInput
+                name="username"
+                control={form.control}
+                placeholder="Enter your username"
+                label='Username'
+              />
+
+              <CustomInput
+                name="password"
+                control={form.control}
+                placeholder="Enter your password"
+                label='Password'
+              />
+
+              <CustomInput
+                name="email"
+                control={form.control}
+                placeholder="Enter your email"
+                label='Email'
               />
 
               <Button type="submit">Submit</Button>
