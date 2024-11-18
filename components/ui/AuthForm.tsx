@@ -6,27 +6,43 @@ import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from './button'
+
+//using zod to define the shape of form
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
-  password: z.string().min(2).max(20),
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }).max(50),
+
+  // password: z.string().min(2).max(20),
   email: z.string().email()
 })
 
-export function ProfileForm(){
+const AuthForm = ({ type }: { type: string }) => {
+  const [user, setUser] = useState(null)
+  // useForm from react-hook-form to create a form obj
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      // password: "",
+      // email: "xx@gmail.com"
     },
   })
-
-  function onSubmit(values: z.infer<typeof formSchema>){
+  // values contains all type-safe and validated fields
+  function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
   }
-}
-
-const AuthForm = ({ type }: { type: string }) => {
-  const [user, setUser] = useState(null)
   return (
     <section className="auth-form">
       <header className="flex flex-col gap-5 md:gap-8">
@@ -66,9 +82,48 @@ const AuthForm = ({ type }: { type: string }) => {
         <div className="flex flex-col gap-4">
           {/* Plaid Link */}
         </div>
-      ): (
+      ) : (
         <>
-        FORM
+          {/* spread all prop and methods from form to Form as props
+        props like register, control, handleSubmit */}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="username" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is your public display name.
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => {
+
+                  return (<FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="email" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is your email
+                    </FormDescription>
+                  </FormItem>
+                  )
+                }}
+              />
+
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
         </>
       )}
     </section>
