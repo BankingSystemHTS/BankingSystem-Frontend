@@ -18,10 +18,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from './button'
 import CustomInput from '../CustomInput'
+import { Loader2 } from 'lucide-react'
 
 
-//using zod to define the shape of form
-export const formSchema = z.object({
+//using zod to define the shape of form, defined in one place
+export const authFormSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }).max(50),
@@ -30,13 +31,14 @@ export const formSchema = z.object({
   email: z.string().email()
 })
 
-export type FormSchemaType = z.infer<typeof formSchema>
+export type AuthFormSchemaType = z.infer<typeof authFormSchema>
 
 const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
   // useForm from react-hook-form to create a form obj
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<AuthFormSchemaType>({
+    resolver: zodResolver(authFormSchema),
     defaultValues: {
       username: "",
       password: "",
@@ -45,8 +47,10 @@ const AuthForm = ({ type }: { type: string }) => {
   })
 
   // values contains all type-safe and validated fields
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof authFormSchema>) {
+    setIsLoading(true)
     console.log(values)
+    setIsLoading(false)
   }
   return (
     <section className="auth-form">
@@ -115,7 +119,14 @@ const AuthForm = ({ type }: { type: string }) => {
                 label='Email'
               />
 
-              <Button type="submit">Submit</Button>
+              <Button type="submit" className="form-btn">
+                {isLoading ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" /> &nbsp;
+                    Loading...
+                  </>
+                ) : type === 'sign-in' ? 'Sign In' : 'Sign Up'}
+              </Button>
             </form>
           </Form>
         </>

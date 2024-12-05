@@ -1,5 +1,5 @@
 import React from 'react'
-import { formSchema } from '@/components/ui/AuthForm'
+import { authFormSchema } from '@/components/ui/AuthForm'
 import { Control, FieldValues, Path } from 'react-hook-form'
 import {
    Form,
@@ -12,14 +12,14 @@ import {
 } from "@/components/ui/form"
 import { z } from 'zod'
 import { Input } from '@/components/ui/input'
-import { FormSchemaType } from '@/components/ui/AuthForm'
+import { AuthFormSchemaType } from '@/components/ui/AuthForm'
 
 type CustomInputProps = {
    name: 'username' | 'email' | 'password',
    label: string,
-   placeholder: string,
+   placeholder?: string,
    // form: typeof Form
-   control: Control<z.infer<typeof formSchema>>
+   control: Control<z.infer<typeof authFormSchema>>
 }
 
 
