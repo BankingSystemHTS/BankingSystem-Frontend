@@ -119,7 +119,7 @@ const AuthForm = ({ type }: { type: string }) => {
                 label='Email'
               />
 
-              <Button type="submit" className="form-btn">
+              <Button type="submit" className="form-btn" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 size={20} className="animate-spin" /> &nbsp;
