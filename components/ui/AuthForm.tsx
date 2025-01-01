@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-
+import { authFormSchema } from "@/lib/utils"
 import {
   Form,
   FormControl,
@@ -19,39 +19,29 @@ import { Input } from "@/components/ui/input"
 import { Button } from './button'
 import CustomInput from '../CustomInput'
 import { Loader2 } from 'lucide-react'
-
-
-//using zod to define the shape of form, defined in one place
-export const authFormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }).max(50),
-
-  password: z.string().min(2).max(20),
-  email: z.string().email()
-})
-
-export type AuthFormSchemaType = z.infer<typeof authFormSchema>
+import { useRouter } from 'next/router'
 
 const AuthForm = ({ type }: { type: string }) => {
-  const [user, setUser] = useState(null)
+  // const router = useRouter();
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // useForm from react-hook-form to create a form obj
-  const form = useForm<AuthFormSchemaType>({
-    resolver: zodResolver(authFormSchema),
+
+  const formSchema = authFormSchema(type);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      password: "",
-      email: ""
-    },
+      email: "",
+      password: ''
+    }
   })
 
-  // values contains all type-safe and validated fields
-  function onSubmit(values: z.infer<typeof authFormSchema>) {
-    setIsLoading(true)
-    console.log(values)
-    setIsLoading(false)
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    console.log("form submitted");
+    setIsLoading(false);
   }
+
   return (
     <section className="auth-form">
       <header className="flex flex-col ">
@@ -97,26 +87,70 @@ const AuthForm = ({ type }: { type: string }) => {
         props like register, control, handleSubmit */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {type == 'sign-up' && (
+                <>
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="firstName"
+                      control={form.control}
+                      placeholder="Enter your first name"
+                      label='First Name'
+                    />
+                    <CustomInput
+                      name="lastName"
+                      control={form.control}
+                      placeholder="Last Name"
+                      label='Last Name'
+                    />
+                  </div>
+                  <CustomInput
+                    name="Address"
+                    control={form.control}
+                    placeholder="Enter your specific address"
+                    label='Address'
+                  />
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="state"
+                      control={form.control}
+                      placeholder="ex. NY"
+                      label='State'
+                    />
+                    <CustomInput
+                      name="postalCode"
+                      control={form.control}
+                      placeholder="ex: 11101"
+                      label='Postal Code'
+                    />
+                  </div>
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="dateOfBirth"
+                      control={form.control}
+                      placeholder="yyyy-mm-dd"
+                      label='Date of Birth'
+                    />
+                    <CustomInput
+                      name="ssn"
+                      control={form.control}
+                      placeholder="ex: 1234"
+                      label='SSN'
+                    />
+                  </div>
 
-              <CustomInput
-                name="username"
-                control={form.control}
-                placeholder="Enter your username"
-                label='Username'
-              />
-
-              <CustomInput
-                name="password"
-                control={form.control}
-                placeholder="Enter your password"
-                label='Password'
-              />
-
+                </>
+              )}
               <CustomInput
                 name="email"
                 control={form.control}
                 placeholder="Enter your email"
                 label='Email'
+              />
+              <CustomInput
+                name="password"
+                control={form.control}
+                placeholder="Enter your password"
+                label='Password'
               />
               <div className="flex flex-col gap-4">
                 <Button type="submit" className="form-btn" disabled={isLoading}>
