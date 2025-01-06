@@ -19,10 +19,12 @@ import { Input } from "@/components/ui/input"
 import { Button } from './button'
 import CustomInput from '../CustomInput'
 import { Loader2 } from 'lucide-react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
+import { signIn, signUp } from '@/lib/actions/user.actions'
+
 
 const AuthForm = ({ type }: { type: string }) => {
-  // const router = useRouter();
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,9 +39,29 @@ const AuthForm = ({ type }: { type: string }) => {
   })
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    console.log("onSubmit is called");
     setIsLoading(true);
-    console.log("form submitted");
-    setIsLoading(false);
+
+    try {
+      //sign up with Appwrite & create plain link token
+      if (type === 'sign-up') {
+        console.log("before sign up call");
+        const newUser = await signUp(data);
+        console.log("after sign up call");
+        setUser(newUser);
+      }
+      if (type === 'sign-in') {
+        // const response = await signIn({
+        //   email: data.email,
+        //   password: data.password,
+        // })
+      }
+
+    } catch (error) {
+      console.error("Error", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -86,8 +108,10 @@ const AuthForm = ({ type }: { type: string }) => {
           {/* spread all prop and methods from form to Form as props
         props like register, control, handleSubmit */}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              {type == 'sign-up' && (
+            <form onSubmit={form.handleSubmit(onSubmit, (errors) => {
+              console.log("Validation errors:", errors)
+            })} className="space-y-4">
+              {type === 'sign-up' && (
                 <>
                   <div className="flex gap-4">
                     <CustomInput
@@ -104,12 +128,18 @@ const AuthForm = ({ type }: { type: string }) => {
                     />
                   </div>
                   <CustomInput
-                    name="Address"
+                    name="address1"
                     control={form.control}
                     placeholder="Enter your specific address"
                     label='Address'
                   />
                   <div className="flex gap-4">
+                    <CustomInput
+                      name="city"
+                      control={form.control}
+                      placeholder="ex: New York"
+                      label='City'
+                    />
                     <CustomInput
                       name="state"
                       control={form.control}
