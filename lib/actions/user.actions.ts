@@ -10,13 +10,15 @@ export const signIn = async (data: signInProps) => {
     //mutations / database / make fetch
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
-    // cookies().set("appwrite-session", session.secret, {
-    //   path: "/",
-    //   httpOnly: true,
-    //   sameSite: "strict",
-    //   secure: true,
-    // });
-    // const user = await account.get();
+    cookies().set("appwrite-session", session.secret, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+
+    // const user = await getUserInfo({ userId: session.userId }) 
+
     return parseStringify(session);
   } catch (error) {
     console.error("Error", error);
@@ -52,7 +54,17 @@ export const signUp = async (userData: SignUpParams) => {
 
 };
 
+export const signOut = async () => {
 
+  try {
+    const { account } = await createSessionClient();
+    await account.deleteSession("current");
+    return true;
+  } catch (error) {
+    console.error("Error", error);
+  }
+
+};
 
 export async function getLoggedInUser() {
   try {

@@ -3,18 +3,20 @@ export const dynamic = 'force-dynamic'
 
 import MobileNav from "@/components/Mobile/MobileNav";
 import Sidebar from "@/components/Sidebar";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { get } from "http";
 import type { Metadata } from "next";
 import Image from "next/image";
 
 //display desktop navBar and mobile navBar based on view port width
 //children are the same
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-  const loggedIn = { firstName: 'Nathan', lastName: 'Chan' };
+  const loggedIn = await getLoggedInUser();
 
   return (
     <main className="flex h-screen w-full font-inter">

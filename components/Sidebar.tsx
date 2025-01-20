@@ -7,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { Button } from "./ui/button";
+import Footer from "./ui/Footer";
 
 const Sidebar = ({ user }: SiderbarProps) => {
   const pathname = usePathname();
@@ -58,7 +60,8 @@ const Sidebar = ({ user }: SiderbarProps) => {
         {/* <p className="text-slate-900">User</p> */}
       </nav>
 
-      <Link href="/" className="flex p-4 gap-4">
+
+      {/* <Button>
         <Image
           src="/icons2/user-logout.svg"
           width={24}
@@ -66,7 +69,8 @@ const Sidebar = ({ user }: SiderbarProps) => {
           alt="logout-icon"
         />
         <p className="text-slate-900 text-semibold">Logout</p>
-      </Link>
+      </Button> */}
+      <Footer user={user} type='desktop'/> 
     </section>
   );
 };
