@@ -2,6 +2,7 @@ import { formatAmount } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import BankCard02 from './BankCard02'
 
 const BankCard = ({ account, userName, showBalance = true }:
    CreditCardProps) => {
@@ -57,6 +58,12 @@ const BankCard = ({ account, userName, showBalance = true }:
             />
          </Link>
          {/* Copy card number functionality */}
+         {/* <BankCard02
+            bankName="Bank of America"
+            cardNumber="1234 1234 1234 1234"
+            cardHolderName="Nathan Chan"
+            expiryDate="12/29"
+         /> */}
       </div>
    )
 }
