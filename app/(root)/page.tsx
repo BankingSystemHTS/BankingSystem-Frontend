@@ -36,8 +36,8 @@ const Home = async () => {
         user={user}
         transactions={[]}
         banks={[
-          { currentBalance: 123.40 }, 
-          { currentBalance: 425.21 }
+          { currentBalance: 123.50 }, 
+          { currentBalance: 425.50 }
         ]}
       />
     </section>

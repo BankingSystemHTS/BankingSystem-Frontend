@@ -12,7 +12,7 @@ const BankCard = ({ account, userName, showBalance = true }:
             <div className="bank-card_content">
                <div>
                   <h1 className="text-16 font-semibold text-white">
-                     {account.name || userName}
+                     {account.name || userName || "Nathan Chan"}
                   </h1>
                   <p className="font-ibm-plex-serif font-black text-white">
                      {formatAmount(account.currentBalance)}
@@ -24,7 +24,7 @@ const BankCard = ({ account, userName, showBalance = true }:
                         {userName}
                      </h1>
                      <h2 className="text-12 font-semibold text-white">
-                        ** / **
+                        ●● / ●●
                      </h2>
                   </div>
                   <p className="text-14 font-semibold tracking-[1.1px] text-white">
@@ -46,7 +46,7 @@ const BankCard = ({ account, userName, showBalance = true }:
                   width={45}
                   height={32}
                   alt="masterCard"
-                  className="ml-8"
+                  className="ml-5"
                />
             </div>
             <Image
@@ -58,6 +58,7 @@ const BankCard = ({ account, userName, showBalance = true }:
             />
          </Link>
          {/* Copy card number functionality */}
+         
          {/* <BankCard02
             bankName="Bank of America"
             cardNumber="1234 1234 1234 1234"
